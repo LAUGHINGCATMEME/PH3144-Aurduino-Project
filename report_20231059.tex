@@ -1,10 +1,9 @@
 \documentclass[%
- sor,
- jor,
- amsmath,amssymb,
- reprint,
+sor,
+jor,
+amsmath,amssymb,
+reprint,
 ]{revtex4-2}
-
 \usepackage{rotating}
 \usepackage{url}
 \usepackage{hyperref}
@@ -14,14 +13,14 @@
 \usepackage{graphicx}
 
 \begin{document}
-\title{Aurduino Project Report}
+\title{Arduino Project Report}
 
 \author{Aumshree P. Shah - Group 19\\20231059}
 \altaffiliation{\color{red}aumshree.pinkalbenshah@students.iiserpune.ac.in}
 \date{\today}
 \begin{abstract}
-\centering
-This report contains the motivation, idea, workings, troubleshooting, and final model of the Arduino project of Group-19.
+	\centering
+	This report contains the motivation, idea, workings, troubleshooting, and final model of the Arduino project of Group-19.
 \end{abstract}
 \maketitle
 \tableofcontents
@@ -29,9 +28,10 @@ This report contains the motivation, idea, workings, troubleshooting, and final 
 \pagebreak
 \section{Motivation and Idea}
 \subsection{Motivation}
-Although given that the final product should be related to safety and address a safety issue, which our following concept does, we also tried to make something out of the ordinary, which motivates us to learn the workings of Arduino. 
+Although given that the final product should be related to safety and address a safety issue, which my following concept does, I also tried to make something out of the ordinary, which motivates us to learn the workings of Arduino. 
 \subsection{Concept}
-Our final concept was to make a \textit{Remote Controlled car, equipped with sensors to detect threats and monitor/neutralize them with a coil gun and cameras}. Though I went through many different concepts, like: Water gun with precise aim at fire, Car with automatic fire detection and neutralization, Dog in hostel detection and monitoring air quality levels, I decided to finalize on our former idea due to its complexity, budget constraints, and other reasons.
+
+My final concept was to make a \textit{Remote Controlled car, equipped with sensors to detect threats and monitor/neutralize them with a coil gun and cameras}. Though I went through many different concepts, like: Water gun with precise aim at fire, Car with automatic fire detection and neutralization, Dog in hostel detection and monitoring air quality levels, I decided to finalize on my former idea due to its complexity, budget constraints, and other reasons.
 
 \section{Workings and Troubleshooting}
 \subsection{Finding Resources}
@@ -40,34 +40,34 @@ The idea of \textit{RC car with Arduino} and \textit{Coilgun controlled by Ardui
 First, we shall look at the transmitter schematic as shown in FIG-1.
 
 \begin{sidewaysfigure}
-    \centering
-    \includegraphics[width=\textheight, height=\textwidth, keepaspectratio]{output.pdf}
-    \caption{Tramsitter Schematics}
-    \label{fig:transmitter}
+	\centering
+	\includegraphics[width=\textheight, height=\textwidth, keepaspectratio]{output.pdf}
+	\caption{Tramsitter Schematics}
+	\label{fig:transmitter}
 \end{sidewaysfigure}
 Here we see the connection from the NRF module to the specific pins is done in such a way that allows the most compatibility. For example, in Arduino Nano, pins D13, D12, and D11 act as SCK, MISO, and MOSI, respectively. Other connections are arbitrary. The Joystick X and Y pins are connected to analog pins. The power is transmitted across the components in the following way: 
 $$\text{Battery (6V)} \implies \text{Aurduino Nano (5V)} \implies \text{NRF Module regulator (3.3V)} \implies \text{NRF Module}$$\\
-
 Now we will look at the receiver schematics shown in FIG-2. Here, although the NRF is connected in the same way to the Arduino, a few connections are made because of pin support; for example, the ENA pin is connected to D9 because only a few D pins support PWM, which the L298 driver requires. The power is transmitted across the components in the following way: 
+
 \begin{align*}
 	\text{Battery (11.1V)} \implies &\text{L298N Motor Driver(11.1)} \implies \text{4 x Motors}\\
 					&\text{L298N Motor Driver(5V)} \implies \text{Aurduino Nano (5V))} \implies \text{NRF Module w/Regulator}
 \end{align*}
 \begin{sidewaysfigure}
-    \centering
-    \includegraphics[width=\textheight, height=\textwidth, keepaspectratio]{output2.pdf}
-    \caption{Reciver Schematics}
-    \label{fig:reciver}
+	\centering
+	\includegraphics[width=\textheight, height=\textwidth, keepaspectratio]{output2.pdf}
+	\caption{Reciver Schematics}
+	\label{fig:reciver}
 \end{sidewaysfigure}
 
 \subsection{How I made it}
-Since my main goal was to make a RC-controlled car, my first step was to make two different Arduinos communicate. For the communication, I decided to use \textbf{NRF24L01+PA+LNA SMA Antenna Wireless Transceiver communication module} as the price difference between the alternatives v/s this was not much, whereas the range was significantly higher. This module operates at 3.3V, to regulate it, I used \textbf{NRF24L01 regulator}, which regulates the logic voltage. We used this regulator after trial and error to regulate the voltage, which will be discussed in a later section.\\
+Since my main goal was to make a RC-controlled car, my first step was to make two different Arduinos communicate. For the communication, I decided to use \textbf{NRF24L01+PA+LNA SMA Antenna Wireless Transceiver communication module} as the price difference between the alternatives v/s this was not much, whereas the range was significantly higher. This module operates at 3.3V, to regulate it, I used \textbf{NRF24L01 regulator}, which regulates the logic voltage. I used this regulator after trial and error to regulate the voltage, which will be discussed in a later section.\\
 
-For the motors, we use \textbf{4 x 300RPM PO Motors} since 300 RPM seemed in the proper range for a car with wheels of diameter $\approx 7\si{cm}$. These motors run on 12V. \\
+For the motors, I use \textbf{4 x 300RPM PO Motors} since 300 RPM seemed in the proper range for a car with wheels of diameter $\approx 7\si{cm}$. These motors run on 12V. \\
 
-For the battery, in the transmitter we used \textbf{4 x 1.5V alkaline battery} giving 6V, which is given to Arduino $V_{in}$ pin. The Arduino has an internal regulator that regulates it to 5V. The Arduino provides power to the NRF regulator.\\ 
+For the battery, in the transmitter I used \textbf{4 x 1.5V alkaline battery} giving 6V, which is given to Arduino $V_{in}$ pin. The Arduino has an internal regulator that regulates it to 5V. The Arduino provides power to the NRF regulator.\\ 
 
-In the receiver, we used \textbf{3 x 3.7V LiOH battery}, which is rechargeable. The reason for using them will be discussed in the next section. This produces a voltage of $\approx 11$V, which is given to \textbf{L298N Motor Driver}, which runs the motors. The L298N has an internal regulator that regulates the voltage to 5V, which powers the Arduino.\\
+In the receiver, I used \textbf{3 x 3.7V LiOH battery}, which is rechargeable. The reason for using them will be discussed in the next section. This produces a voltage of $\approx 11$V, which is given to \textbf{L298N Motor Driver}, which runs the motors. The L298N has an internal regulator that regulates the voltage to 5V, which powers the Arduino.\\
 
 A phone holder is added to the back, which can function as many things. \\
 
@@ -78,18 +78,25 @@ Initially, I used \textbf{9V alkaline battery}. A single 9V battery was unable t
 \subsubsection{Search for a proper chassis for a car}
 I needed a strong base for my car. A cardboard couldn't hold its weight. A proper chassis was really hard to find, and after some trial and error, I finally settled on a small black metal box, which I found in a mechanic's box. 
 \subsubsection{Regulation of NRF module}
-This was a really big issue when we first started testing, since to make anything out of this project, I first had to communicate between two Arduinos. The NRF module operates at 3.3V, and the Arduino logic is 5V. I had to use some kind of way to regulate it. First, I used resistor dividers, but it turned out that they caused a high level of signal disturbance. Then I used voltage regulators, these kind of worked, but there was always some kind of issue which made the modules unable to communicate. Also, since the NRF module needs a large supply of current peaks, my initial tests were without parallel capacitors, so no matter how I regulated the voltage, the module was unable to communicate. This was finally resolved by using a dedicated NRF voltage regulator, which was compact, cheap, and did everything we needed.
+This was a really big issue when I first started testing, since to make anything out of this project, I first had to communicate between two Arduinos. The NRF module operates at 3.3V, and the Arduino logic is 5V. I had to use some kind of way to regulate it. First, I used resistor dividers, but it turned out that they caused a high level of signal disturbance. Then I used voltage regulators, these kind of worked, but there was always some kind of issue which made the modules unable to communicate. Also, since the NRF module needs a large supply of current peaks, my initial tests were without parallel capacitors, so no matter how I regulated the voltage, the module was unable to communicate. This was finally resolved by using a dedicated NRF voltage regulator, which was compact, cheap, and did everything we needed.
 \subsubsection{Fused and non-working components}
-Many of the components got fused while we were working on them, includes but not limited to: Arduino nano, an NRF module, etc. To prevent this from happening on other components, I found the following helpful: Not soldering components directly to the other components, using voltage limiters, reading the datasheet (obvious, but we initially ignored this), and by not shorting the components (obvious, but that's how my nano got fused).
+Many of the components got fused while I were working on them, includes but not limited to: Arduino nano, an NRF module, etc. To prevent this from happening on other components, I found the following helpful: Not soldering components directly to the other components, using voltage limiters, reading the datasheet (obvious, but I initially ignored this), and by not shorting the components (obvious, but that's how my nano got fused).
 \subsubsection{Weight, Speed Structure and Battery life}
 For weight, Speed, and battery life, all these issues were solved by LiOH batteries. To fix the motor ot the chassis, I used Feviquick, which worked really well and was able to carry a good amount of weight on the car. Other components were fixed by hot glue, and the final structure was made after many trials and errors.\\
 
 \section{Result and final product}
-Images 
-Top friont and back etc veiw
-[Image ]
-[Video with yt reference]
+The car and the controller looked like this after completion:\\
+
+\includegraphics[width=0.9\textwidth]{lmfao.png}\linebreak
+
+and video's of this running is uploaded on youtube as refrenced in the next refrence section. 
+\vspace{1cm}
+\hrule
+\vfill
+\pagebreak
+
+\bibliographystyle{apsrev4-2}  % or apsrev4-1, prsty, etc.
 \nocite{*}
-\appendix
 \bibliography{resource}
+
 \end{document}
